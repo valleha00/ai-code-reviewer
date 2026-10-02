@@ -1,0 +1,60 @@
+// Prisma Schema for AI Code Reviewer
+// Database: PostgreSQL (with compatibility for SQLite or PostgreSQL via DATABASE_URL)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String?
+  avatarUrl String?
+  githubId  String?  @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  reviews Review[]
+
+  @@map("users")
+}
+
+model Review {
+  id          String   @id @default(uuid())
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  codeSnippet String   @db.Text
+  language    String
+  focus       String
+  summary     String   @db.Text
+  score       Int
+  provider    String   @default("auto")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  issues Issue[]
+
+  @@index([userId])
+  @@index([createdAt])
+  @@map("reviews")
+}
+
+model Issue {
+  id          String   @id @default(uuid())
+  reviewId    String
+  review      Review   @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  severity    String   // 'critical' | 'warning' | 'suggestion'
+  line        Int
+  title       String
+  description String   @db.Text
+  patch       String   @db.Text
+  createdAt   DateTime @default(now())
+
+  @@index([reviewId])
+  @@map("issues")
+}

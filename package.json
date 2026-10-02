@@ -1,0 +1,17 @@
+{
+  "name": "ai-code-reviewer-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI Code Reviewer for Pull Requests and Code Snippets with Linear/Vercel Design System",
+  "scripts": {
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "dev": "concurrently -n \"BACKEND,FRONTEND\" -c \"cyan,magenta\" \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build": "cd backend && npm run build && cd ../frontend && npm run build",
+    "prisma:generate": "cd backend && npx prisma generate"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.4"
+  }
+}
