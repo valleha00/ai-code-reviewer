@@ -55,25 +55,25 @@ Markdown
 ## 📐 Архитектурная схема
 
 ```mermaid
-graph TD
-    User[Developer / Browser] -->|Next.js UI| Frontend[Frontend Next.js]
-    Frontend -->|POST API Request| Backend[Backend Express]
-    
-    subgraph Backend Pipeline
-        Backend --> RateLimit[Rate Limiter]
-        RateLimit --> Logger[Request Logger]
-        Logger --> Controller[Review Controller]
-        Controller --> Validator[Zod Schema Validator]
+flowchart TD
+    User["Разработчик / Браузер"] --> Frontend["Frontend: Next.js 16"]
+    Frontend --> Backend["Backend: Express API"]
+
+    subgraph Pipeline["Backend Pipeline"]
+        Backend --> RateLimit["Rate Limiter (30 req/min)"]
+        RateLimit --> Logger["Logger Middleware"]
+        Logger --> Controller["Review Controller"]
+        Controller --> Validator{"Zod Schema Validator"}
         
-        Validator -->|Valid| Service[Review Service]
-        Validator -->|Invalid| Error[Error 400 Bad Request]
+        Validator -->|Valid| Service["Review Service"]
+        Validator -->|Invalid| ErrorHandler["Error Handler (400)"]
         
-        Service --> Factory[LLM Provider Factory]
-        Factory -->|OpenAI Key| OpenAI[OpenAI GPT-4o]
-        Factory -->|Claude Key| Anthropic[Anthropic Claude 3.5]
-        Factory -->|Fallback| Mock[Heuristic AST Engine]
+        Service --> LLMFactory["LLM Provider Factory"]
+        LLMFactory --> OpenAI["OpenAI GPT-4o"]
+        LLMFactory --> Anthropic["Anthropic Claude 3.5"]
+        LLMFactory --> Mock["Heuristic AST Mock"]
         
-        Service -.->|Persistence| DB[(PostgreSQL / Prisma)]
+        Service --> Prisma["Prisma ORM / PostgreSQL"]
     end
 
     Mock --> Service
@@ -81,6 +81,7 @@ graph TD
     Anthropic --> Service
     Service --> Controller
     Controller --> Frontend
+```
 
 📂 Структура проекта
 
