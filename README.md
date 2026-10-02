@@ -1,60 +1,69 @@
-Ошибка возникает из-за того, что внутри Mermaid-схемы попал специальный невидимый символ (или проблема с кодировкой пробелов/дефисов в строках соединения), из-за чего парсер Mermaid сбоит на строке 27.
+🤖 ReviewPulse — AI Code Reviewer for Pull Requests & Snippets
 
-Вот исправленный и полностью чистый README.md. Скопируй его целиком и замени содержимое своего файла:
-Markdown
+ReviewPulse — это production-ready сервис для автоматизированного анализа Pull Request'ов и сниппетов исходного кода на базе AI с гарантированно структурированным JSON-ответом (Structured Outputs), многоуровневым обнаружением уязвимостей, оценкой качества кода и генерацией готовых патчей.
 
-# 🤖 ReviewPulse — AI Code Reviewer for Pull Requests & Snippets
+🌐 Попробовать в работе: ai-code-reviewer-eight-vert.vercel.app
 
-[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Vercel-000000.svg?style=flat-for-the-badge&logo=vercel)](https://ai-code-reviewer-eight-vert.vercel.app/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-blue.svg)](https://www.typescriptlang.org/)
-[![Next.js](https://img.shields.io/badge/Next.js-16%20(App%20Router)-black.svg)](https://nextjs.org/)
-[![Fastify/Express](https://img.shields.io/badge/Backend-Express%20%2B%20TypeScript-green.svg)](https://expressjs.com/)
-[![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-v3.4-38bdf8.svg)](https://tailwindcss.com/)
-[![Zustand](https://img.shields.io/badge/State-Zustand-orange.svg)](https://zustand-demo.pmnd.rs/)
-[![Prisma](https://img.shields.io/badge/ORM-Prisma%206-2d3748.svg)](https://www.prisma.io/)
+Интерфейс спроектирован в минималистичном дизайне в стиле Linear / Vercel с тёмной темой по умолчанию, плавной анимацией и моноширинной типографикой.
 
-> **ReviewPulse** — это production-ready сервис для автоматизированного анализа Pull Request'ов и сниппетов исходного кода на базе AI с гарантированно структурированным JSON-ответом (Structured Outputs), многоуровневым обнаружением уязвимостей, оценкой качества кода и генерацией готовых патчей.  
-> 🌐 **Попробовать в работе:** [ai-code-reviewer-eight-vert.vercel.app](https://ai-code-reviewer-eight-vert.vercel.app/)  
-> Интерфейс спроектирован в минималистичном дизайне в стиле **Linear / Vercel** с тёмной темой по умолчанию, плавной анимацией и моноширинной типографикой.
+🌟 Ключевые возможности
 
----
+Двухпанельный сплит-интерфейс (Linear / Vercel Style):
 
-## 🌟 Ключевые возможности
+Левая панель (Input):
 
-* **Двухпанельный сплит-интерфейс (Linear / Vercel Style):**
-  * **Левая панель (Input):**
-    * Селектор 12 языков программирования (*Python, TypeScript, Go, Rust, Java, C++, C#, PHP, Ruby, SQL, Shell*).
-    * Селектор фокуса ревью: *Безопасность (Security), Производительность (Performance), Чистота кода (Clean Code), Предотвращение багов (Bug Prevention), Архитектура (Architecture)*.
-    * Редактор кода с синхронизированной нумерацией строк, поддержкой отступов по `Tab`, счетчиком строк/символов и горячей клавишей запуска **`⌘ + Enter`** / **`Ctrl + Enter`**.
-    * Быстрые пресеты реальных уязвимостей (SQL-инъекции, утечки памяти в React, deadlock горутин в Go, паники в Rust).
-  * **Правая панель (Output / Dashboard):**
-    * Круговой анимированный спидометр/гейдж общего рейтинга кода (Score 0-100) с цветовой индикацией:
-      * 🟢 **85–100**: *Production Ready* (Высокое качество)
-      * 🟡 **60–84**: *Needs Refactoring* (Требует оптимизации)
-      * 🔴 **0–59**: *Critical Vulnerabilities* (Критические дефекты)
-    * Фильтрация проблем по уровням критичности: *All, Critical, Warning, Suggestion*.
-    * Карточки проблем с цветовой полосой, бейджем номера строки (`Line 42`), детальным объяснением причины бага и блоком готового патча.
-    * Интерактивные кнопки **«Copy Patch»** и **«Apply to Editor»**.
-    * Экспорт ревью в виде форматированного Markdown-комментария для GitHub PR / GitLab MR или скачивание в JSON.
+Селектор 12 языков программирования (Python, TypeScript, Go, Rust, Java, C++, C#, PHP, Ruby, SQL, Shell).
 
-* **Архитектура Backend (Service-Oriented):**
-  * Разделение на **Routes**, **Controllers**, **Middlewares** и **Services**.
-  * **AI Provider Factory:**
-    * **OpenAI Provider:** Structured Outputs через `response_format: { type: "json_schema" }` или JSON Mode.
-    * **Anthropic Provider:** Claude 3.5 Sonnet с валидацией схемы.
-    * **Intelligent Heuristic Engine (Mock):** Встроенный статический анализатор кода с эвристиками AST для мгновенного локального тестирования без обязательного указания API ключей (Zero-config).
-  * **Служебные Middleware:**
-    * `requestLogger`: цветное логирование запросов, статус-кодов, IP и задержки.
-    * `apiRateLimiter`: лимитирование запросов (`express-rate-limit`) с заголовками `RateLimit-*` и RFC-ответом 429.
-    * `errorHandler`: централизованный перехват ошибок Zod (400), таймаутов (504), сбоев upstream LLM (502).
-  * **База данных & ORM:**
-    * Схема `Prisma ORM` с моделями `User`, `Review`, `Issue` для PostgreSQL.
+Селектор фокуса ревью: Безопасность (Security), Производительность (Performance), Чистота кода (Clean Code), Предотвращение багов (Bug Prevention), Архитектура (Architecture).
 
----
+Редактор кода с синхронизированной нумерацией строк, поддержкой отступов по Tab, счетчиком строк/символов и горячей клавишей запуска ⌘ + Enter / Ctrl + Enter.
 
-## 📐 Архитектурная схема
+Быстрые пресеты реальных уязвимостей (SQL-инъекции, утечки памяти в React, deadlock горутин в Go, паники в Rust).
 
-```mermaid
+Правая панель (Output / Dashboard):
+
+Круговой анимированный спидометр/гейдж общего рейтинга кода (Score 0-100) с цветовой индикацией:
+
+🟢 85–100: Production Ready (Высокое качество)
+
+🟡 60–84: Needs Refactoring (Требует оптимизации)
+
+🔴 0–59: Critical Vulnerabilities (Критические дефекты)
+
+Фильтрация проблем по уровням критичности: All, Critical, Warning, Suggestion.
+
+Карточки проблем с цветовой полосой, бейджем номера строки (Line 42), детальным объяснением причины бага и блоком готового патча.
+
+Интерактивные кнопки «Copy Patch» и «Apply to Editor».
+
+Экспорт ревью в виде форматированного Markdown-комментария для GitHub PR / GitLab MR или скачивание в JSON.
+
+Архитектура Backend (Service-Oriented):
+
+Разделение на Routes, Controllers, Middlewares и Services.
+
+AI Provider Factory:
+
+OpenAI Provider: Structured Outputs через response_format: { type: "json_schema" } или JSON Mode.
+
+Anthropic Provider: Claude 3.5 Sonnet с валидацией схемы.
+
+Intelligent Heuristic Engine (Mock): Встроенный статический анализатор кода с эвристиками AST для мгновенного локального тестирования без обязательного указания API ключей (Zero-config).
+
+Служебные Middleware:
+
+requestLogger: цветное логирование запросов, статус-кодов, IP и задержки.
+
+apiRateLimiter: лимитирование запросов (express-rate-limit) с заголовками RateLimit-* и RFC-ответом 429.
+
+errorHandler: централизованный перехват ошибок Zod (400), таймаутов (504), сбоев upstream LLM (502).
+
+База данных & ORM:
+
+Схема Prisma ORM с моделями User, Review, Issue для PostgreSQL.
+
+📐 Архитектурная схема
+
 flowchart TD
     User["Разработчик / Браузер"] --> Frontend["Frontend: Next.js 16"]
     Frontend --> Backend["Backend: Express API"]
@@ -81,7 +90,7 @@ flowchart TD
     Anthropic --> Service
     Service --> Controller
     Controller --> Frontend
-```
+
 
 📂 Структура проекта
 
@@ -157,62 +166,65 @@ project#1/
 ├── package.json                    # Корневой package.json для одновременного запуска
 └── README.md
 
+
 🚀 Быстрый старт
+
 Требования
 
-    Node.js: v18.0.0 или новее (рекомендуется v20+)
+Node.js: v18.0.0 или новее (рекомендуется v20+)
 
-    npm или pnpm
+npm или pnpm
 
 1. Установка всех зависимостей
 
 Выполните из корневой директории:
-Bash
 
 npm run install:all
+
 
 2. Запуск приложения
 
 Для одновременного запуска Backend (порт 4000) и Frontend (порт 3000):
-Bash
 
 npm run dev
 
+
 Или запускайте сервисы раздельно в разных терминалах:
 
-    Backend:
-    Bash
+Backend:
 
-    npm run dev:backend
+npm run dev:backend
 
-    Frontend:
-    Bash
 
-    npm run dev:frontend
+Frontend:
 
-Откройте в браузере http://localhost:3000 или воспользуйтесь живым демо: ai-code-reviewer-eight-vert.vercel.app :)
+npm run dev:frontend
+
+
+Откройте в браузере http://localhost:3000 или воспользуйтесь живым демо: ai-code-reviewer-eight-vert.vercel.app
+
 🔑 Конфигурация API Ключей (Опционально)
 
 По умолчанию сервис не требует никаких API-ключей и работает "из коробки", используя интеллектуальный статический эвристический анализатор (Mock Heuristic Engine). Он мгновенно находит реальные уязвимости.
 
 Если вы хотите подключить GPT-4o или Claude 3.5 Sonnet:
 
-    Либо укажите ключи в файле backend/.env:
-    Фрагмент кода
+Либо укажите ключи в файле backend/.env:
 
-    OPENAI_API_KEY="sk-..."
-    ANTHROPIC_API_KEY="sk-ant-..."
-    DEFAULT_LLM_PROVIDER="auto"
+OPENAI_API_KEY="sk-..."
+ANTHROPIC_API_KEY="sk-ant-..."
+DEFAULT_LLM_PROVIDER="auto"
 
-    Либо прямо в веб-интерфейсе нажмите иконку шестерёнки (Settings) в правом верхнем углу и вставьте свой ключ. Ключ сохранится в локальном хранилище вашего браузера.
+
+Либо прямо в веб-интерфейсе нажмите иконку шестерёнки (Settings) в правом верхнем углу и вставьте свой ключ. Ключ сохранится в локальном хранилище вашего браузера.
 
 📡 API Спецификация
+
 1. Анализ кода
 
 POST /api/v1/review/analyze
 
 Тело запроса (Request Body):
-JSON
 
 {
   "code": "import sqlite3\n\ndef get_user(uid):\n    cursor.execute(\"SELECT * FROM users WHERE id = \" + uid)",
@@ -221,8 +233,8 @@ JSON
   "provider": "auto"
 }
 
+
 Успешный ответ (200 OK):
-JSON
 
 {
   "summary": "Review identified 1 critical vulnerability(ies) that block deployment. Remediation is required to prevent security exploits.",
@@ -247,10 +259,10 @@ JSON
   }
 }
 
+
 2. Проверка здоровья (Health Check)
 
 GET /api/v1/health
-JSON
 
 {
   "status": "healthy",
@@ -264,10 +276,10 @@ JSON
   "version": "1.0.0"
 }
 
+
 🗄 База данных (Prisma ORM)
 
 В архитектуре заложена поддержка PostgreSQL для сохранения истории ревью и командных воркспейсов:
-Фрагмент кода
 
 model User {
   id      String   @id @default(uuid())
@@ -295,14 +307,15 @@ model Issue {
   patch       String   @db.Text
 }
 
+
 🛡️ Безопасность и надёжность
 
-    Rate Limiting: Защита от спама и DoS (до 30 запросов в минуту на IP с заголовком Retry-After).
+Rate Limiting: Защита от спама и DoS (до 30 запросов в минуту на IP с заголовком Retry-After).
 
-    Error Boundary: Все ошибки валидации, таймауты и сбои LLM-провайдеров перехватываются централизованным обработчиком.
+Error Boundary: Все ошибки валидации, таймауты и сбои LLM-провайдеров перехватываются централизованным обработчиком.
 
-    Строгая типизация: Полное покрытие TypeScript со строгим режимом (strict: true), валидация через zod.
+Строгая типизация: Полное покрытие TypeScript со строгим режимом (strict: true), валидация через zod.
 
 📄 Лицензия
 
-MIT. Спроектировано и реализовано с упором на чистую архитектуру, эстетику Linear/Vercel и высокую производительность :)
+MIT. Спроектировано и реализовано с упором на чистую архитектуру, эстетику Linear/Vercel и высокую производительность.
