@@ -1,5 +1,6 @@
 # 🤖 ReviewPulse — AI Code Reviewer for Pull Requests & Snippets
 
+[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Vercel-000000.svg?style=flat-for-the-badge&logo=vercel)](https://ai-code-reviewer-eight-vert.vercel.app/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8-blue.svg)](https://www.typescriptlang.org/)
 [![Next.js](https://img.shields.io/badge/Next.js-16%20(App%20Router)-black.svg)](https://nextjs.org/)
 [![Fastify/Express](https://img.shields.io/badge/Backend-Express%20%2B%20TypeScript-green.svg)](https://expressjs.com/)
@@ -7,8 +8,9 @@
 [![Zustand](https://img.shields.io/badge/State-Zustand-orange.svg)](https://zustand-demo.pmnd.rs/)
 [![Prisma](https://img.shields.io/badge/ORM-Prisma%206-2d3748.svg)](https://www.prisma.io/)
 
-> **ReviewPulse** — это production-ready сервис для автоматизированного анализа Pull Request'ов и сниппетов исходного кода на базе AI с гарантированно структурированным JSON-ответом (Structured Outputs), многоуровневым обнаружением уязвимостей, оценкой качества кода и генерацией готовых патчей.
-> Интерфейс спроектирован в минималистичном дизайне в стиле **Linear / Vercel** с тёмной темой по умолчанию, плавной анимацией Framer Motion и моноширинной типографикой.
+> **ReviewPulse** — это production-ready сервис для автоматизированного анализа Pull Request'ов и сниппетов исходного кода на базе AI с гарантированно структурированным JSON-ответом (Structured Outputs), многоуровневым обнаружением уязвимостей, оценкой качества кода и генерацией готовых патчей.  
+> 🌐 **Попробовать в работе:** [ai-code-reviewer-eight-vert.vercel.app](https://ai-code-reviewer-eight-vert.vercel.app/)  
+> Интерфейс спроектирован в минималистичном дизайне в стиле **Linear / Vercel** с тёмной темой по умолчанию, плавной анимацией и моноширинной типографикой.
 
 ---
 
@@ -27,7 +29,7 @@
       * 🔴 **0–59**: *Critical Vulnerabilities* (Критические дефекты)
     * Фильтрация проблем по уровням критичности: *All, Critical, Warning, Suggestion*.
     * Карточки проблем с цветовой полосой, бейджем номера строки (`Line 42`), детальным объяснением причины бага и блоком готового патча.
-    * Интерактивные кнопки **«Copy Patch»** (быстрое копирование в буфер обмена) и **«Apply to Editor»** (мгновенное внедрение исправления в редактор).
+    * Интерактивные кнопки **«Copy Patch»** и **«Apply to Editor»**.
     * Экспорт ревью в виде форматированного Markdown-комментария для GitHub PR / GitLab MR или скачивание в JSON.
 
 * **Архитектура Backend (Service-Oriented):**
@@ -37,7 +39,7 @@
     * **Anthropic Provider:** Claude 3.5 Sonnet с валидацией схемы.
     * **Intelligent Heuristic Engine (Mock):** Встроенный статический анализатор кода с эвристиками AST для мгновенного локального тестирования без обязательного указания API ключей (Zero-config).
   * **Служебные Middleware:**
-    * `requestLogger`: цветное логирование запросов, статус-кодов, IP и задержки в миллисекундах.
+    * `requestLogger`: цветное логирование запросов, статус-кодов, IP и задержки.
     * `apiRateLimiter`: лимитирование запросов (`express-rate-limit`) с заголовками `RateLimit-*` и RFC-ответом 429.
     * `errorHandler`: централизованный перехват ошибок Zod (400), таймаутов (504), сбоев upstream LLM (502).
   * **База данных & ORM:**
@@ -74,20 +76,16 @@ graph TD
     Anthropic --> ReviewService
     ReviewService --> ReviewController
     ReviewController --> Frontend
-```
 
----
+📂 Структура проекта
 
-## 📂 Структура проекта
-
-```
 project#1/
-├── backend/                         # Backend API сервис (Express + TypeScript)
+├── backend/                  # Backend API сервис (Express + TypeScript)
 │   ├── prisma/
-│   │   └── schema.prisma            # PostgreSQL Prisma схема (User, Review, Issue)
+│   │   └── schema.prisma     # PostgreSQL Prisma схема (User, Review, Issue)
 │   ├── src/
 │   │   ├── config/
-│   │   │   └── env.ts               # Валидация переменных окружения через Zod
+│   │   │   └── env.ts            # Валидация переменных окружения через Zod
 │   │   ├── controllers/
 │   │   │   └── review.controller.ts # Контроллер обработки ревью и пресетов
 │   │   ├── middlewares/
@@ -116,7 +114,7 @@ project#1/
 │   ├── tsconfig.json
 │   └── .env.example
 │
-├── frontend/                        # Frontend приложение (Next.js 16 App Router)
+├── frontend/                 # Frontend приложение (Next.js 16 App Router)
 │   ├── src/
 │   │   ├── app/
 │   │   │   ├── api/review/route.ts  # Next.js Route Handler (прокси к бэкенду)
@@ -125,20 +123,20 @@ project#1/
 │   │   │   └── page.tsx             # Главный сплит-экран
 │   │   ├── components/
 │   │   │   ├── editor/
-│   │   │   │   └── CodeEditorPanel.tsx       # Редактор кода с нумерацией строк
+│   │   │   │   └── CodeEditorPanel.tsx         # Редактор кода с нумерацией строк
 │   │   │   ├── history/
-│   │   │   │   └── HistoryDrawer.tsx         # Боковая панель истории ревью
+│   │   │   │   └── HistoryDrawer.tsx           # Боковая панель истории ревью
 │   │   │   ├── layout/
-│   │   │   │   └── Header.tsx                # Верхняя панель Linear/Vercel
+│   │   │   │   └── Header.tsx                  # Верхняя панель Linear/Vercel
 │   │   │   ├── review/
-│   │   │   │   ├── EmptyReviewState.tsx      # Приветственный экран
-│   │   │   │   ├── ExportModal.tsx           # Экспорт в PR Markdown / JSON
-│   │   │   │   ├── FilterBar.tsx             # Фильтрация по критичности
-│   │   │   │   ├── IssueCard.tsx             # Карточка проблемы с патчем
-│   │   │   │   ├── ReviewDashboardPanel.tsx  # Панель вывода результатов
-│   │   │   │   └── ScoreGauge.tsx            # Круговой гейдж рейтинга
+│   │   │   │   ├── EmptyReviewState.tsx        # Приветственный экран
+│   │   │   │   ├── ExportModal.tsx             # Экспорт в PR Markdown / JSON
+│   │   │   │   ├── FilterBar.tsx               # Фильтрация по критичности
+│   │   │   │   ├── IssueCard.tsx               # Карточка проблемы с патчем
+│   │   │   │   ├── ReviewDashboardPanel.tsx    # Панель вывода результатов
+│   │   │   │   └── ScoreGauge.tsx              # Круговой гейдж рейтинга
 │   │   │   └── settings/
-│   │   │       └── SettingsModal.tsx         # Настройки LLM и ввод API-ключей
+│   │   │       └── SettingsModal.tsx           # Настройки LLM и ввод API-ключей
 │   │   ├── lib/
 │   │   │   ├── api-client.ts        # Клиент вызова API с обработкой таймаутов
 │   │   │   ├── presets.ts           # Пресеты кода для быстрого тестирования
@@ -151,99 +149,85 @@ project#1/
 │   ├── tailwind.config.ts
 │   └── tsconfig.json
 │
-├── package.json                     # Корневой package.json для одновременного запуска
+├── package.json                    # Корневой package.json для одновременного запуска
 └── README.md
-```
 
----
+🚀 Быстрый старт
+Требования
 
-## 🚀 Быстрый старт
+    Node.js: v18.0.0 или новее (рекомендуется v20+)
 
-### Требования
-* **Node.js**: v18.0.0 или новее (рекомендуется v20+)
-* **npm** или **pnpm**
+    npm или pnpm
 
-### 1. Установка всех зависимостей
+1. Установка всех зависимостей
+
 Выполните из корневой директории:
-```bash
-npm run install:all
-```
-*(Или отдельно `cd backend && npm install`, затем `cd ../frontend && npm install`)*
+Bash
 
-### 2. Запуск приложения
+npm run install:all
+
+2. Запуск приложения
+
 Для одновременного запуска Backend (порт 4000) и Frontend (порт 3000):
-```bash
+Bash
+
 npm run dev
-```
 
 Или запускайте сервисы раздельно в разных терминалах:
-* **Backend:**
-  ```bash
-  npm run dev:backend
-  # Сервер стартует на http://localhost:4000
-  ```
-* **Frontend:**
-  ```bash
-  npm run dev:frontend
-  # Интерфейс доступен на http://localhost:3000
-  ```
 
-Откройте в браузере **`http://localhost:3000`** — сервис готов к работе!
+    Backend:
+    Bash
 
----
+    npm run dev:backend
 
-## 🔑 Конфигурация API Ключей (Опционально)
+    Frontend:
+    Bash
 
-По умолчанию сервис **не требует никаких API-ключей** и работает "из коробки", используя интеллектуальный статический эвристический анализатор (`Mock Heuristic Engine`). Он мгновенно находит реальные уязвимости (SQL-инъекции, хардкод секретов, утечки памяти, неблокирующие горутины, O(N²) циклы) и выдает честные оценки.
+    npm run dev:frontend
 
-Если вы хотите подключить **GPT-4o** или **Claude 3.5 Sonnet**:
-1. Либо укажите ключи в файле `backend/.env`:
-   ```env
-   OPENAI_API_KEY="sk-..."
-   ANTHROPIC_API_KEY="sk-ant-..."
-   DEFAULT_LLM_PROVIDER="auto"
-   ```
-2. Либо прямо в веб-интерфейсе нажмите иконку **шестерёнки (Settings)** в правом верхнем углу и вставьте свой ключ. Ключ сохранится в локальном хранилище вашего браузера.
+Откройте в браузере http://localhost:3000 или воспользуйтесь живым демо: ai-code-reviewer-eight-vert.vercel.app :)
+🔑 Конфигурация API Ключей (Опционально)
 
----
+По умолчанию сервис не требует никаких API-ключей и работает "из коробки", используя интеллектуальный статический эвристический анализатор (Mock Heuristic Engine). Он мгновенно находит реальные уязвимости.
 
-## 📡 API Спецификация
+Если вы хотите подключить GPT-4o или Claude 3.5 Sonnet:
 
-### 1. Анализ кода
-**`POST /api/v1/review/analyze`**
+    Либо укажите ключи в файле backend/.env:
+    Фрагмент кода
 
-**Headers:**
-```http
-Content-Type: application/json
-```
+    OPENAI_API_KEY="sk-..."
+    ANTHROPIC_API_KEY="sk-ant-..."
+    DEFAULT_LLM_PROVIDER="auto"
 
-**Тело запроса (Request Body):**
-```json
+    Либо прямо в веб-интерфейсе нажмите иконку шестерёнки (Settings) в правом верхнем углу и вставьте свой ключ. Ключ сохранится в локальном хранилище вашего браузера.
+
+📡 API Спецификация
+1. Анализ кода
+
+POST /api/v1/review/analyze
+
+Тело запроса (Request Body):
+JSON
+
 {
   "code": "import sqlite3\n\ndef get_user(uid):\n    cursor.execute(\"SELECT * FROM users WHERE id = \" + uid)",
   "language": "python",
   "focus": "security",
   "provider": "auto"
 }
-```
 
-* `code` *(string, min: 3, max: 100,000)*: Анализируемый кусок кода.
-* `language` *(enum)*: `'python' | 'typescript' | 'javascript' | 'go' | 'rust' | 'java' | 'cpp' | 'csharp' | 'php' | 'ruby' | 'sql' | 'shell'`
-* `focus` *(enum)*: `'security' | 'performance' | 'clean_code' | 'bug_prevention' | 'architecture'`
-* `provider` *(enum, опционально)*: `'auto' | 'openai' | 'anthropic' | 'mock'`
-* `apiKey` *(string, опционально)*: Клиентский ключ API.
+Успешный ответ (200 OK):
+JSON
 
-**Успешный ответ (200 OK):**
-```json
 {
-  "summary": "Review identified 1 critical vulnerability(ies) that block deployment. Remediation is required to prevent security exploits or catastrophic runtime crashes. Review the patches below before merging.",
+  "summary": "Review identified 1 critical vulnerability(ies) that block deployment. Remediation is required to prevent security exploits.",
   "score": 65,
   "issues": [
     {
       "severity": "critical",
       "line": 4,
       "title": "SQL Injection Vulnerability",
-      "description": "Dynamic SQL query constructed via direct string concatenation or interpolation. Attackers can bypass authentication or extract sensitive database contents.",
+      "description": "Dynamic SQL query constructed via direct string concatenation or interpolation.",
       "patch": "cursor.execute(\"SELECT * FROM users WHERE id = %s\", (user_id,))"
     }
   ],
@@ -257,11 +241,12 @@ Content-Type: application/json
     "suggestionCount": 0
   }
 }
-```
 
-### 2. Проверка здоровья (Health Check)
-**`GET /api/v1/health`**
-```json
+2. Проверка здоровья (Health Check)
+
+GET /api/v1/health
+JSON
+
 {
   "status": "healthy",
   "timestamp": "2026-10-02T08:14:00.000Z",
@@ -273,23 +258,16 @@ Content-Type: application/json
   },
   "version": "1.0.0"
 }
-```
 
-### 3. Пресеты кода
-**`GET /api/v1/review/presets`**
-Возвращает готовые примеры фрагментов кода с типичными ошибками.
+🗄️️ База данных (Prisma ORM)
 
----
+В архитектуре заложена поддержка PostgreSQL для сохранения истории ревью и командных воркспейсов:
+Фрагмент кода
 
-## 🗄️ База данных (Prisma ORM)
-
-В архитектуре заложена поддержка PostgreSQL для сохранения истории ревью, авторизации через GitHub OAuth и командных воркспейсов:
-
-```prisma
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  reviews   Review[]
+  id      String   @id @default(uuid())
+  email   String   @unique
+  reviews Review[]
 }
 
 model Review {
@@ -311,24 +289,15 @@ model Issue {
   description String   @db.Text
   patch       String   @db.Text
 }
-```
 
-Для миграции на вашу PostgreSQL базу:
-```bash
-cd backend
-npx prisma migrate dev --name init
-```
+🛡️ Безопасность и надёжность
 
----
+    Rate Limiting: Защита от спама и DoS (до 30 запросов в минуту на IP с заголовком Retry-After).
 
-## 🛡️ Безопасность и надёжность
+    Error Boundary: Все ошибки валидации, таймауты и сбои LLM-провайдеров перехватываются централизованным обработчиком.
 
-1. **Rate Limiting**: Защита от спама и DoS (до 30 запросов в минуту на IP с заголовком `Retry-After`).
-2. **Error Boundary**: Все ошибки валидации, таймауты и сбои LLM-провайдеров перехватываются централизованным обработчиком и возвращают понятные RFC-совместимые коды ошибок (`400`, `429`, `502`, `504`).
-3. **Строгая типизация**: Полное покрытие TypeScript с флагом `"strict": true`, отсутствие `any`, валидация контрактов данных через `zod`.
-4. **Безопасное копирование в буфер**: Поддержка современного `navigator.clipboard` с fallback на `document.execCommand` для любых сред.
+    Строгая типизация: Полное покрытие TypeScript со строгим режимом (strict: true), валидация через zod.
 
----
+📄 Лицензия
 
-## 📄 Лицензия
-MIT. Спроектировано и реализовано с упором на чистую архитектуру, эстетику Linear/Vercel и высокую производительность.
+MIT. Спроектировано и реализовано с упором на чистую архитектуру, эстетику Linear/Vercel и высокую производительность :)
