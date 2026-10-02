@@ -85,6 +85,7 @@ flowchart TD
     Anthropic --> Service
     Service --> Controller
     Controller --> Frontend
+```
 
 📂 Структура проекта
 Plaintext
