@@ -1,3 +1,8 @@
+Ошибка возникает из-за того, что внутри Mermaid-схемы попал специальный невидимый символ (или проблема с кодировкой пробелов/дефисов в строках соединения), из-за чего парсер Mermaid сбоит на строке 27.
+
+Вот исправленный и полностью чистый README.md. Скопируй его целиком и замени содержимое своего файла:
+Markdown
+
 # 🤖 ReviewPulse — AI Code Reviewer for Pull Requests & Snippets
 
 [![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Vercel-000000.svg?style=flat-for-the-badge&logo=vercel)](https://ai-code-reviewer-eight-vert.vercel.app/)
@@ -51,31 +56,31 @@
 
 ```mermaid
 graph TD
-    User([Разработчик / Браузер]) <-->|Next.js 16 UI / Split-Screen| Frontend[Frontend: Next.js + Tailwind + Zustand]
-    Frontend -->|POST /api/v1/review/analyze| Backend[Backend API: Express + TypeScript]
+    User[Developer / Browser] -->|Next.js UI| Frontend[Frontend Next.js]
+    Frontend -->|POST API Request| Backend[Backend Express]
     
     subgraph Backend Pipeline
-        Backend --> MW_RateLimit[Rate Limiter Middleware: 30 req/min]
-        MW_RateLimit --> MW_Logger[Logger Middleware]
-        MW_Logger --> ReviewController[ReviewController]
-        ReviewController --> ZodValidator{Zod Schema Validator}
+        Backend --> RateLimit[Rate Limiter]
+        RateLimit --> Logger[Request Logger]
+        Logger --> Controller[Review Controller]
+        Controller --> Validator[Zod Schema Validator]
         
-        ZodValidator -->|Valid| ReviewService[ReviewService]
-        ZodValidator -->|Invalid| ErrorHandler[Error Handler: 400 Bad Request]
+        Validator -->|Valid| Service[Review Service]
+        Validator -->|Invalid| Error[Error 400 Bad Request]
         
-        ReviewService --> LLMFactory[LLM Provider Factory]
-        LLMFactory -->|If OpenAI Key| OpenAI[OpenAI Provider: GPT-4o JSON Schema]
-        LLMFactory -->|If Claude Key| Anthropic[Anthropic Provider: Claude 3.5]
-        LLMFactory -->|Default / Fallback| HeuristicMock[Heuristic AST Engine: Local Mock]
+        Service --> Factory[LLM Provider Factory]
+        Factory -->|OpenAI Key| OpenAI[OpenAI GPT-4o]
+        Factory -->|Claude Key| Anthropic[Anthropic Claude 3.5]
+        Factory -->|Fallback| Mock[Heuristic AST Engine]
         
-        ReviewService -.->|Optional Persistence| PrismaORM[(PostgreSQL / Prisma)]
+        Service -.->|Persistence| DB[(PostgreSQL / Prisma)]
     end
 
-    HeuristicMock --> ReviewService
-    OpenAI --> ReviewService
-    Anthropic --> ReviewService
-    ReviewService --> ReviewController
-    ReviewController --> Frontend
+    Mock --> Service
+    OpenAI --> Service
+    Anthropic --> Service
+    Service --> Controller
+    Controller --> Frontend
 
 📂 Структура проекта
 
@@ -104,7 +109,6 @@ project#1/
 │   │   │   │   ├── openai.provider.ts    # Провайдер OpenAI Structured Outputs
 │   │   │   │   ├── anthropic.provider.ts # Провайдер Claude 3.5 Sonnet
 │   │   │   │   ├── mock.provider.ts      # Эвристический анализатор AST
-│   │   │   │   ├── prompts.ts            # Специализированные системные промпты
 │   │   │   │   └── llm.factory.ts        # Фабрика выбора провайдера
 │   │   │   └── review.service.ts         # Бизнес-логика ревью и история
 │   │   ├── types/
@@ -259,7 +263,7 @@ JSON
   "version": "1.0.0"
 }
 
-🗄️️ База данных (Prisma ORM)
+🗄 База данных (Prisma ORM)
 
 В архитектуре заложена поддержка PostgreSQL для сохранения истории ревью и командных воркспейсов:
 Фрагмент кода
