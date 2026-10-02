@@ -1,3 +1,7 @@
+<div align="right">
+  <strong>English</strong> | <a href="./README.ru.md">Русский</a>
+</div>
+
 # 🤖 ReviewPulse — AI Code Reviewer for Pull Requests & Snippets
 
 [![Live Demo](https://img.shields.io/badge/Live_Demo-Vercel-000000.svg?style=flat-for-the-badge&logo=vercel)](https://ai-code-reviewer-eight-vert.vercel.app/)
@@ -7,31 +11,31 @@
 [![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-v3.4-38bdf8.svg)](https://tailwindcss.com/)
 [![Prisma](https://img.shields.io/badge/ORM-Prisma%206-2d3748.svg)](https://www.prisma.io/)
 
-> **ReviewPulse** — это production-ready сервис для автоматизированного анализа Pull Request'ов и сниппетов исходного кода на базе AI с гарантированно структурированным JSON-ответом, многоуровневым обнаружением уязвимостей и генерацией готовых патчей.  
+> **ReviewPulse** is a production-ready service for automated analysis of pull requests and code snippets using AI with strictly structured JSON outputs, multi-level vulnerability detection, and automated patch generation.  
 > 🌐 **Live Demo:** [ai-code-reviewer-eight-vert.vercel.app](https://ai-code-reviewer-eight-vert.vercel.app/)  
 
 ![ReviewPulse Demo](./docs/demo.gif)
 
 ---
 
-## 🌟 Ключевые возможности
+## 🌟 Key Features
 
-* **Двухпанельный сплит-интерфейс:**
-  * **Input Panel:** Выбор из 12 языков программирования, настройка фокуса ревью (Security, Performance, Clean Code), редактор кода с подсветкой и пресеты реальных уязвимостей (SQLi, утечки памяти).
-  * **Output Panel:** Круговой спидометр рейтинга качества кода (0-100), фильтрация проблем по критичности, карточки с готовыми патчами и возможностью быстрого экспорта в PR.
-* **Backend Архитектура:**
-  * Встроенный статический анализатор (Heuristic AST Mock) для работы "из коробки" без ключей.
-  * Интеграция с OpenAI (GPT-4o) и Anthropic (Claude 3.5 Sonnet) через Structured Outputs.
-  * Middleware для логирования и Rate Limiting (лимит запросов).
-  * Поддержка PostgreSQL через Prisma ORM.
+* **Dual-Pane Split Interface:**
+  * **Input Panel:** Support for 12 programming languages, customizable review focus (Security, Performance, Clean Code), code editor with line numbering, and presets for real-world vulnerabilities (SQLi, memory leaks).
+  * **Output Panel:** Interactive circular code quality score gauge (0-100), severity-based issue filtering, vulnerability cards with instant patches, and quick PR export options.
+* **Backend Architecture:**
+  * Built-in static heuristic analyzer (AST Mock) for zero-config out-of-the-box local testing.
+  * Integration with OpenAI (GPT-4o) and Anthropic (Claude 3.5 Sonnet) via Structured Outputs.
+  * Middleware for structured logging and rate limiting.
+  * PostgreSQL persistence layer powered by Prisma ORM.
 
 ---
 
-## 📐 Архитектурная схема
+## 📐 Architecture Diagram
 
 ```mermaid
 flowchart TD
-    User["Разработчик / Браузер"] --> Frontend["Frontend: Next.js 16"]
+    User["Developer / Browser"] --> Frontend["Frontend: Next.js 16"]
     Frontend --> Backend["Backend: Express API"]
 
     subgraph Pipeline["Backend Pipeline"]
@@ -56,96 +60,89 @@ flowchart TD
     Anthropic --> Service
     Service --> Controller
     Controller --> Frontend
-```
 
----
+📂 Project Structure
+Plaintext
 
-## 📂 Структура проекта
-
-```text
 project#1/
-├── backend/                  # Backend API сервис (Express + TypeScript)
+├── backend/                  # Backend API service (Express + TypeScript)
 │   ├── prisma/
-│   │   └── schema.prisma     # PostgreSQL Prisma схема
+│   │   └── schema.prisma     # PostgreSQL Prisma schema
 │   ├── src/
-│   │   ├── config/           # Валидация переменных окружения
-│   │   ├── controllers/      # Контроллеры обработки ревью
-│   │   ├── middlewares/      # Обработка ошибок, логгер, Rate Limit
-│   │   ├── routes/           # Маршрутизация API v1
-│   │   ├── schemas/          # Zod-схемы валидации
-│   │   ├── services/         # Бизнес-логика и LLM-провайдеры
-│   │   ├── types/            # TypeScript типы
-│   │   └── server.ts         # Запуск сервера
+│   │   ├── config/           # Environment variable validation
+│   │   ├── controllers/      # Review controllers
+│   │   ├── middlewares/      # Error handling, logger, rate limiting
+│   │   ├── routes/           # API v1 routes
+│   │   ├── schemas/          # Zod validation schemas
+│   │   ├── services/         # Business logic and LLM providers
+│   │   ├── types/            # TypeScript type definitions
+│   │   └── server.ts         # Server entry point
 │   ├── package.json
 │   └── tsconfig.json
 │
-├── frontend/                 # Frontend приложение (Next.js 16)
+├── frontend/                 # Frontend application (Next.js 16)
 │   ├── src/
-│   │   ├── app/              # App Router, глобальные стили, Layout
-│   │   ├── components/       # UI компоненты (Editor, Dashboard, Карточки)
-│   │   ├── lib/              # API клиенты и утилиты
-│   │   ├── store/            # Zustand стейт-менеджер
-│   │   └── types/            # Интерфейсы Frontend
+│   │   ├── app/              # App Router, styles, layout
+│   │   ├── components/       # UI components (Editor, Dashboard, Cards)
+│   │   ├── lib/              # API clients and utilities
+│   │   ├── store/            # Zustand state management
+│   │   └── types/            # Frontend interfaces
 │   ├── package.json
 │   └── tailwind.config.ts
 │
 └── README.md
-```
 
----
+🚀 Quick Start
+Prerequisites
 
-## 🚀 Быстрый старт
+    Node.js v18.0.0+ (v20+ recommended)
 
-### Требования
-* Node.js v18.0.0+ (рекомендуется v20+)
-* npm или pnpm
+    npm or pnpm
 
-### Запуск приложения
-Выполните из корневой директории установку зависимостей:
-```bash
+Installation & Running
+
+Install dependencies from the root directory:
+Bash
+
 npm run install:all
-```
 
-Для одновременного запуска Backend (порт 4000) и Frontend (порт 3000):
-```bash
+To run both Backend (port 4000) and Frontend (port 3000) concurrently:
+Bash
+
 npm run dev
-```
 
-Откройте в браузере `http://localhost:3000`.
+Open http://localhost:3000 in your browser.
+🔑 API Keys Configuration (Optional)
 
----
+The service works out of the box using the built-in heuristic AST engine. If you want to connect real LLM providers:
 
-## 🔑 Конфигурация API Ключей (Опционально)
+    Specify keys in backend/.env:
+    Фрагмент кода
 
-Сервис работает "из коробки" с использованием встроенного эвристического анализатора. Если вы хотите подключить настоящие LLM:
+    OPENAI_API_KEY="sk-..."
+    ANTHROPIC_API_KEY="sk-ant-..."
+    DEFAULT_LLM_PROVIDER="auto"
 
-1. Укажите ключи в файле `backend/.env`:
-   ```env
-   OPENAI_API_KEY="sk-..."
-   ANTHROPIC_API_KEY="sk-ant-..."
-   DEFAULT_LLM_PROVIDER="auto"
-   ```
-2. Или укажите ключ прямо в веб-интерфейсе, нажав на иконку настроек (Settings). Ключ будет сохранен локально в браузере.
+    Or configure your API key directly in the web UI by clicking the Settings icon. Keys are stored locally in your browser.
 
----
+📡 API Specification
+Analyze Code
 
-## 📡 API Спецификация
+POST /api/v1/review/analyze
 
-### Анализ кода
-`POST /api/v1/review/analyze`
+Request Body:
+JSON
 
-**Request Body:**
-```json
 {
   "code": "import sqlite3\n\ndef get_user(uid):\n    cursor.execute(\"SELECT * FROM users WHERE id = \" + uid)",
   "language": "python",
   "focus": "security",
   "provider": "auto"
 }
-```
 
-**Response (200 OK):**
-```json
+Response (200 OK):
+JSON
+
 {
   "summary": "Review identified critical vulnerabilities. Remediation is required.",
   "score": 65,
@@ -163,15 +160,12 @@ npm run dev
     "processingTimeMs": 457
   }
 }
-```
 
----
+🗄️ Database
 
-## 🗄️ База данных
+Architecture supports PostgreSQL for persisting review history:
+Фрагмент кода
 
-Архитектура поддерживает PostgreSQL для хранения истории ревью:
-
-```prisma
 model User {
   id      String   @id @default(uuid())
   email   String   @unique
@@ -187,16 +181,14 @@ model Review {
 }
 
 model Issue {
-  id          String   @id @default(uuid())
-  reviewId    String
-  severity    String
-  line        Int
-  title       String
-  patch       String   @db.Text
+  id       String   @id @default(uuid())
+  reviewId String
+  severity String
+  line     Int
+  title    String
+  patch    String   @db.Text
 }
-```
 
----
+📄 License
 
-## 📄 Лицензия
-MIT. Спроектировано для высокой производительности и эстетики :)
+MIT. Designed for high performance, clean architecture, and modern developer aesthetics.
