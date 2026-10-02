@@ -7,8 +7,10 @@
 [![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-v3.4-38bdf8.svg)](https://tailwindcss.com/)
 [![Prisma](https://img.shields.io/badge/ORM-Prisma%206-2d3748.svg)](https://www.prisma.io/)
 
-> **ReviewPulse** is a production-ready service for automated analysis of pull requests and code snippets using AI with strictly structured JSON outputs, multi-level vulnerability detection, and automated patch generation.  
+> **ReviewPulse** is a production-ready AI-powered service for automated Pull Request and code snippet analysis. It guarantees structured JSON outputs, multi-level vulnerability detection, code quality assessment, and generates ready-to-use patches.  
 > 🌐 **Live Demo:** [ai-code-reviewer-eight-vert.vercel.app](https://ai-code-reviewer-eight-vert.vercel.app/)  
+
+---
 
 ![ReviewPulse Demo](./docs/demo.gif)
 
@@ -16,14 +18,14 @@
 
 ## 🌟 Key Features
 
-* **Dual-Pane Split Interface:**
-  * **Input Panel:** Support for 12 programming languages, customizable review focus (Security, Performance, Clean Code), code editor with line numbering, and presets for real-world vulnerabilities (SQLi, memory leaks).
-  * **Output Panel:** Interactive circular code quality score gauge (0-100), severity-based issue filtering, vulnerability cards with instant patches, and quick PR export options.
+* **Two-Panel Split Interface:**
+  * **Input Panel:** Select from 12 programming languages, choose a review focus (Security, Performance, Clean Code), use the code editor with syntax highlighting, and test real-world vulnerability presets (SQLi, memory leaks).
+  * **Output Panel:** Circular code quality score gauge (0-100), severity-based issue filtering, interactive issue cards with ready-to-use patches, and quick export to Markdown for PRs.
 * **Backend Architecture:**
-  * Built-in static heuristic analyzer (AST Mock) for zero-config out-of-the-box local testing.
+  * Built-in static analyzer (Heuristic AST Mock) allows testing out-of-the-box without API keys.
   * Integration with OpenAI (GPT-4o) and Anthropic (Claude 3.5 Sonnet) via Structured Outputs.
-  * Middleware for structured logging and rate limiting.
-  * PostgreSQL persistence layer powered by Prisma ORM.
+  * Middleware for structured logging and Rate Limiting.
+  * PostgreSQL database support via Prisma ORM.
 
 ---
 
@@ -58,88 +60,94 @@ flowchart TD
     Controller --> Frontend
 ```
 
-📂 Project Structure
-Plaintext
+---
 
+## 📂 Project Structure
+
+```text
 project#1/
 ├── backend/                  # Backend API service (Express + TypeScript)
 │   ├── prisma/
 │   │   └── schema.prisma     # PostgreSQL Prisma schema
 │   ├── src/
-│   │   ├── config/           # Environment variable validation
-│   │   ├── controllers/      # Review controllers
-│   │   ├── middlewares/      # Error handling, logger, rate limiting
-│   │   ├── routes/           # API v1 routes
+│   │   ├── config/           # Environment variables validation
+│   │   ├── controllers/      # Review and preset controllers
+│   │   ├── middlewares/      # Error handler, logger, Rate Limit
+│   │   ├── routes/           # API v1 routing
 │   │   ├── schemas/          # Zod validation schemas
 │   │   ├── services/         # Business logic and LLM providers
-│   │   ├── types/            # TypeScript type definitions
+│   │   ├── types/            # TypeScript strict types
 │   │   └── server.ts         # Server entry point
 │   ├── package.json
 │   └── tsconfig.json
 │
 ├── frontend/                 # Frontend application (Next.js 16)
 │   ├── src/
-│   │   ├── app/              # App Router, styles, layout
+│   │   ├── app/              # App Router, global styles, Layout
 │   │   ├── components/       # UI components (Editor, Dashboard, Cards)
 │   │   ├── lib/              # API clients and utilities
-│   │   ├── store/            # Zustand state management
+│   │   ├── store/            # Zustand state manager
 │   │   └── types/            # Frontend interfaces
 │   ├── package.json
 │   └── tailwind.config.ts
 │
 └── README.md
+```
 
-🚀 Quick Start
-Prerequisites
+---
 
-    Node.js v18.0.0+ (v20+ recommended)
+## 🚀 Quick Start
 
-    npm or pnpm
+### Requirements
+* Node.js v18.0.0+ (v20+ recommended)
+* npm or pnpm
 
-Installation & Running
-
-Install dependencies from the root directory:
-Bash
-
+### Running the Application
+Install all dependencies from the root directory:
+```bash
 npm run install:all
+```
 
-To run both Backend (port 4000) and Frontend (port 3000) concurrently:
-Bash
-
+Start the Backend (port 4000) and Frontend (port 3000) simultaneously:
+```bash
 npm run dev
+```
 
-Open http://localhost:3000 in your browser.
-🔑 API Keys Configuration (Optional)
+Open `http://localhost:3000` in your browser.
 
-The service works out of the box using the built-in heuristic AST engine. If you want to connect real LLM providers:
+---
 
-    Specify keys in backend/.env:
-    Фрагмент кода
+## 🔑 API Key Configuration (Optional)
 
-    OPENAI_API_KEY="sk-..."
-    ANTHROPIC_API_KEY="sk-ant-..."
-    DEFAULT_LLM_PROVIDER="auto"
+The service works out-of-the-box using a built-in heuristic analyzer. If you want to connect real LLM providers:
 
-    Or configure your API key directly in the web UI by clicking the Settings icon. Keys are stored locally in your browser.
+1. Add your keys to the `backend/.env` file:
+   ```env
+   OPENAI_API_KEY="sk-..."
+   ANTHROPIC_API_KEY="sk-ant-..."
+   DEFAULT_LLM_PROVIDER="auto"
+   ```
+2. Or configure them directly in the web UI by clicking the **Settings** icon. The key is securely stored in your browser's Local Storage.
 
-📡 API Specification
-Analyze Code
+---
 
-POST /api/v1/review/analyze
+## 📡 API Specification
 
-Request Body:
-JSON
+### Code Analysis
+`POST /api/v1/review/analyze`
 
+**Request Body:**
+```json
 {
   "code": "import sqlite3\n\ndef get_user(uid):\n    cursor.execute(\"SELECT * FROM users WHERE id = \" + uid)",
   "language": "python",
   "focus": "security",
   "provider": "auto"
 }
+```
 
-Response (200 OK):
-JSON
-
+**Response (200 OK):**
+```json
 {
   "summary": "Review identified critical vulnerabilities. Remediation is required.",
   "score": 65,
@@ -157,12 +165,15 @@ JSON
     "processingTimeMs": 457
   }
 }
+```
 
-🗄️ Database
+---
 
-Architecture supports PostgreSQL for persisting review history:
-Фрагмент кода
+## 🗄️️ Database
 
+The architecture includes PostgreSQL support for storing review history and team workspaces:
+
+```prisma
 model User {
   id      String   @id @default(uuid())
   email   String   @unique
@@ -178,14 +189,16 @@ model Review {
 }
 
 model Issue {
-  id       String   @id @default(uuid())
-  reviewId String
-  severity String
-  line     Int
-  title    String
-  patch    String   @db.Text
+  id          String   @id @default(uuid())
+  reviewId    String
+  severity    String
+  line        Int
+  title       String
+  patch       String   @db.Text
 }
+```
 
-📄 License
+---
 
-MIT. Designed for high performance, clean architecture, and modern developer aesthetics.
+## 📄 License
+MIT. Designed for high performance and clean aesthetics :)
