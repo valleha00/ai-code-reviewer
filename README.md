@@ -1,7 +1,3 @@
-<div align="right">
-  <strong>English</strong> | <a href="./README.ru.md">Русский</a>
-</div>
-
 # 🤖 ReviewPulse — AI Code Reviewer for Pull Requests & Snippets
 
 [![Live Demo](https://img.shields.io/badge/Live_Demo-Vercel-000000.svg?style=flat-for-the-badge&logo=vercel)](https://ai-code-reviewer-eight-vert.vercel.app/)
@@ -60,6 +56,7 @@ flowchart TD
     Anthropic --> Service
     Service --> Controller
     Controller --> Frontend
+```
 
 📂 Project Structure
 Plaintext
