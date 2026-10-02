@@ -10,6 +10,8 @@
 > **ReviewPulse** — это production-ready сервис для автоматизированного анализа Pull Request'ов и сниппетов исходного кода на базе AI с гарантированно структурированным JSON-ответом, многоуровневым обнаружением уязвимостей и генерацией готовых патчей.  
 > 🌐 **Live Demo:** [ai-code-reviewer-eight-vert.vercel.app](https://ai-code-reviewer-eight-vert.vercel.app/)  
 
+![ReviewPulse Demo](./docs/demo.gif)
+
 ---
 
 ## 🌟 Ключевые возможности
